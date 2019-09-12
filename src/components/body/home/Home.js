@@ -11,8 +11,14 @@ class Home extends React.Component{
     constructor(props){
         super(props);
         this.state = {
-            data : MonthData
+            data : MonthData,
+            dateSelelcted : new Date("1971-01-01")
         }
+        this.changeDate = this.changeDate.bind(this);
+    }
+
+    changeDate(date){
+        this.setState({dateSelelcted:date});
     }
 
     render(){
@@ -21,20 +27,31 @@ class Home extends React.Component{
                 <h3>
                     Hi {'{username}'}! here's your calendar.
                 </h3>
-                <Calendar tileClassName={
-                    ({ date, view }) => {
-                        let dateArray = this.state.data.map(dat => dat.date.getDate());
-                            {/* if (view === 'month' && date.getDate() === 3 && date.getMonth() === 8){ */}
-                            if (view === 'month' && dateArray.includes(date.getDate()) && date.getMonth() === 8){
-                                return  'wednesday'
-                            } else {
-                                return null
-                            }
-                        }    
-                    }
+                <Calendar 
+                    tileClassName={
+                        ({ date, view }) => {
+                            let dateArray = this.state.data.map(dat => dat.date.getDate());
+                                {/* if (view === 'month' && date.getDate() === 3 && date.getMonth() === 8){ */}
+                                if (view === 'month' && dateArray.includes(date.getDate()) && date.getMonth() === 8){
+                                    return  'wednesday'
+                                } else {
+                                    return null
+                                }
+                            }    
+                        }
+                    onChange={this.changeDate}
                 />
                 <br/>
-                <HomeBookingList />
+                {
+                    this.state.data.map(dat => {
+                        console.log(dat.date + '===' + this.state.dateSelelcted)
+                        if(dat.date.getDate() === this.state.dateSelelcted.getDate() && dat.date.getMonth() === this.state.dateSelelcted.getMonth()){
+                            return(
+                                <HomeBookingList data={dat}/>
+                            )
+                        }
+                    })
+                }
                 <div className="flex-container">
                     <button className="flex-content">Create Personal Booking</button>
                     <button className="flex-content">Create Group Booking</button>

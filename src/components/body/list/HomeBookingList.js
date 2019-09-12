@@ -3,8 +3,8 @@ import React from 'react'
 const HomeBookingList = (props) => {
     return(
         <div>
-            <h5>{'10:30 AM'} - {'05:30 PM'}</h5>
-            Going to party
+            <h5>{props.data.startTime} - {props.data.endTime}</h5>
+            {props.data.title}
         </div>
     )
 }
