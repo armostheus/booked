@@ -3,10 +3,18 @@ import Calendar from 'react-calendar'
 import './Home.css'
 
 import HomeBookingList from '../list/HomeBookingList'
+import { MonthData } from '../../../mock-data/MockHomeData'
 /* import Calendar from 'react-calendar/dist/entry.nostyle'
  */
 
 class Home extends React.Component{
+    constructor(props){
+        super(props);
+        this.state = {
+            data : MonthData
+        }
+    }
+
     render(){
         return(
             <div>
@@ -14,8 +22,16 @@ class Home extends React.Component{
                     Hi {'{username}'}! here's your calendar.
                 </h3>
                 <Calendar tileClassName={
-                    ({ date, view }) => view === 'month' && date.getDate() === 3 && date.getMonth() === 8 ? 'wednesday' : null    
-                }
+                    ({ date, view }) => {
+                        let dateArray = this.state.data.map(dat => dat.date.getDate());
+                            {/* if (view === 'month' && date.getDate() === 3 && date.getMonth() === 8){ */}
+                            if (view === 'month' && dateArray.includes(date.getDate()) && date.getMonth() === 8){
+                                return  'wednesday'
+                            } else {
+                                return null
+                            }
+                        }    
+                    }
                 />
                 <br/>
                 <HomeBookingList />
