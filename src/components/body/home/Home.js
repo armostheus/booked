@@ -44,10 +44,9 @@ class Home extends React.Component{
                 <br/>
                 {
                     this.state.data.map(dat => {
-                        console.log(dat.date + '===' + this.state.dateSelelcted)
                         if(dat.date.getDate() === this.state.dateSelelcted.getDate() && dat.date.getMonth() === this.state.dateSelelcted.getMonth()){
                             return(
-                                <HomeBookingList data={dat}/>
+                                <HomeBookingList key={dat.id} data={dat}/>
                             )
                         }
                     })
