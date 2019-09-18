@@ -49,7 +49,7 @@ export const MyBookings = [
         desc : "Take your dog out for a walk",
         reminder : "03:45 PM",
     }
-]
+];
 
 export const OthersBookings = [
     
@@ -108,4 +108,43 @@ export const OthersBookings = [
         desc : "Work on module com sfff STEH hst sarg pletion of Booked web app",
         reminder : "08:50 AM",
     }
-]
+];
+
+export const BookingNotification = [
+    {
+        id : 1,
+        title : "Continuosly asking but reverting",
+        organizer : "Korzak Rekdrea",
+        date : new Date("2019-08-10"),
+        startTime : "10:30 AM",
+        endTime : "02:00 PM",
+        otherMembers : ["Deressa Freders", "Tretgr DdfDssd", "Trtyyh Ghtrtr", "Ertrr Freadr"]
+    },
+    {
+        id : 2,
+        title : "kids school over and out",
+        organizer : "Grerda Dreadds",
+        date : new Date("2019-04-21"),
+        startTime : "02:00 PM",
+        endTime : "05:00 PM",
+        otherMembers : ["Derexds Afgsdfd", "Erterw Adffrws", "Eghygv Fttgeddf", "Hergsdf Fhtedfs", "Ethjufb Gjthhn"]
+    },
+    {
+        id : 3,
+        title : "benaras akhada arishae hs vushuv",
+        organizer : "Driresh Dffnents",
+        date : new Date("2019-01-31"),
+        startTime : "11:00 AM",
+        endTime : "04:00 PM",
+        otherMembers : []
+    },
+    {
+        id : 4,
+        title : "Rajesh Messi Kokaram Ertam",
+        organizer : "Waah Bhaisaab",
+        date : new Date("2019-10-02"),
+        startTime : "03:45 PM",
+        endTime : "09:00 PM",
+        otherMembers : ["Errtees Aerres", "Gersd Ffrssd", "Tyytgf Sghtee", "Tuuutfg Sfrerg"]
+    }
+];
