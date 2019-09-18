@@ -52,5 +52,60 @@ export const MyBookings = [
 ]
 
 export const OthersBookings = [
-    {}
+    
+    {
+        id : 1,
+        title: "Booking title 1",
+        date : new Date("2019-07-19"),
+        startTime : "00:00 AM",
+        endTime : "11:59 PM",
+        otherMembers : ["name surname"],
+        organizer : "orgName OrgSurname",
+        desc : "Description dummy I dont know what I am talking here",
+        reminder : null,
+    },
+    {
+        id : 2,
+        title: "Famous junior designer",
+        date : new Date("2019-07-19"),
+        startTime : "00:00 AM",
+        endTime : "11:59 PM",
+        otherMembers : [],
+        organizer : "Akshay Khanna",
+        desc : "Dekhna zaruri supreme mudde court reporter dedh saal jab ladta raha",
+        reminder : "04:00 PM",
+    },
+    {
+        id : 3,
+        title: "Hathiyaar yawn desciplene employee",
+        date : new Date("2019-07-19"),
+        startTime : "10:00 AM",
+        endTime : "09:30 PM",
+        otherMembers : ["Perkota Dokrta", "Riend Seroosn", "Jairfjs Heredds"],
+        organizer : "Orta Gerota",
+        desc : "Weptra kjssueo hdsu ndahh keih jaslui hdueu ,lah lhu lueuht hhut",
+        reminder : "01:00 PM",
+    },
+    {
+        id : 4,
+        title: "kiya khamoshi nirdosh",
+        date : new Date("2019-07-19"),
+        startTime : "01:00 PM",
+        endTime : "05:45 PM",
+        otherMembers : [],
+        organizer : "Kortak Rortak",
+        desc : "Work on mado  adds u dle asda ascompletion of Booked adas web app",
+        reminder : null,
+    },
+    {
+        id : 5,
+        title: "Stithi bani family section",
+        date : new Date("2019-07-19"),
+        startTime : "09:00 AM",
+        endTime : "11:55 AM",
+        otherMembers : ["Drsf Fdfdd", "Tytyrh Xbydfj", "Usgth Hstrgg"],
+        organizer : "Vhysdr Gsrsgh",
+        desc : "Work on module com sfff STEH hst sarg pletion of Booked web app",
+        reminder : "08:50 AM",
+    }
 ]
