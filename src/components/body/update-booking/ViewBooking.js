@@ -83,6 +83,12 @@ class ViewBooking extends React.Component{
                         <button onClick={()=>this.updateDisplayDetails('p')}>previous</button> <button onClick={()=>this.updateDisplayDetails('n')}>next</button>
                     </div>                    
                 </div>
+                <div style={this.state.selectedTab === "OB" ? {display : 'block'} : {display : 'none'}}>
+                    Other's Bookings
+                </div>
+                <div style={this.state.selectedTab === "BR" ? {display : 'block'} : {display : 'none'}}>
+                    Booking Request
+                </div>
             </div>
         )
     }
