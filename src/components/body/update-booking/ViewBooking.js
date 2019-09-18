@@ -32,6 +32,7 @@ class ViewBooking extends React.Component{
         };
         this.changeTab = this.changeTab.bind(this);
         this.displayDetails = this.displayDetails.bind(this);
+        this.updateDisplayDetails = this.updateDisplayDetails.bind(this);
     }
 
     changeTab(view){
@@ -39,8 +40,20 @@ class ViewBooking extends React.Component{
     }
 
     displayDetails(view){
-        console.log(view);
         this.setState({selectedYB : view});
+    }
+
+    updateDisplayDetails(p){
+        let currentView = [this.state.selectedYB.id, this.state.yourBooking[0].id, this.state.yourBooking[this.state.yourBooking.length-1].id];
+            if(p==='p' && currentView[0] != currentView[1]){
+                let prevData = this.state.yourBooking.filter(data => data.id === (currentView[0]-1));
+                console.log(prevData[0]);
+                this.setState({selectedYB : prevData[0]});
+            } else if(p==='n'&&currentView[0] != currentView[2]){
+                let prevData = this.state.yourBooking.filter(data => data.id === (currentView[0]+1));
+                console.log(prevData[0]);
+                this.setState({selectedYB : prevData[0]});
+            }       
     }
 
     render(){
@@ -66,7 +79,8 @@ class ViewBooking extends React.Component{
                         Organizer : {this.state.selectedYB.organizer}<br/>
                         Desc : {this.state.selectedYB.desc}<br/>
                         Reminder : <br/>
-                        <button>Update</button> <button>Exit</button>
+                        <button>Update</button> <button>Exit</button><br/>
+                        <button onClick={()=>this.updateDisplayDetails('p')}>previous</button> <button onClick={()=>this.updateDisplayDetails('n')}>next</button>
                     </div>                    
                 </div>
             </div>
