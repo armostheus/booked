@@ -21,6 +21,16 @@ const ViewOthersBookings = (props) => {
     )
 }
 
+const ViewBookingRequests = (props) => {
+    return(
+        <div onClick={()=>props.displayDetailedRequest(props.data)}>
+            {props.data.date.getDate()} {month[props.data.date.getMonth()]}, {props.data.startTime} - {props.data.endTime} <br />
+            <h3>{props.data.title}</h3>
+            Requested By : {props.data.organizer}
+        </div>
+    )
+}
+
 class ViewBooking extends React.Component{
     constructor(props){
         super(props);
@@ -49,6 +59,15 @@ class ViewBooking extends React.Component{
                 organizer : null,
                 desc : null,
                 reminder : null,
+            },
+            selectedBR : {
+                id : null,
+                title : null,
+                organizer : null,
+                date : new Date("1971-02-01"),
+                startTime : null,
+                endTime : null,
+                otherMembers : []
             }
         };
         this.changeTab = this.changeTab.bind(this);
@@ -66,6 +85,10 @@ class ViewBooking extends React.Component{
 
     displayOthersDetails(data){
         this.setState({selectedOB : data});
+    }
+
+    displayDetailedRequest(data){
+        this.setState({selectedBR : data});
     }
 
     updateDisplayDetails(p){
@@ -91,6 +114,19 @@ class ViewBooking extends React.Component{
                 let prevData = this.state.othersBooking.filter(data => data.id === (currentView[0]+1));
                 console.log(prevData[0]);
                 this.setState({selectedOB : prevData[0]});
+            }       
+    }
+
+    updateDetailedRequest(p){
+        let currentView = [this.state.selectedBR.id, this.state.requests[0].id, this.state.requests[this.state.requests.length-1].id];
+            if(p==='p' && currentView[0] != currentView[1]){
+                let prevData = this.state.requests.filter(data => data.id === (currentView[0]-1));
+                console.log(prevData[0]);
+                this.setState({selectedBR : prevData[0]});
+            } else if(p==='n'&&currentView[0] != currentView[2]){
+                let prevData = this.state.requests.filter(data => data.id === (currentView[0]+1));
+                console.log(prevData[0]);
+                this.setState({selectedBR : prevData[0]});
             }       
     }
 
@@ -121,7 +157,6 @@ class ViewBooking extends React.Component{
                     </div>                    
                 </div>
                 <div style={this.state.selectedTab === "OB" ? {display : 'block'} : {display : 'none'}}>
-                    Other's Bookings
                     {
                         this.state.othersBooking.map(data => <ViewOthersBookings key={data.id} data={data} displayOthersDetails={(data) => this.displayOthersDetails(data)}/>)
                     }
@@ -141,7 +176,19 @@ class ViewBooking extends React.Component{
 
                 </div>
                 <div style={this.state.selectedTab === "BR" ? {display : 'block'} : {display : 'none'}}>
-                    Booking Request
+                    {
+                        this.state.requests.map(data => <ViewBookingRequests key={data.id} data={data} displayDetailedRequest={(data)=>this.displayDetailedRequest(data)}/>)
+                    }
+                    <div style={this.state.selectedBR.title ? {display : 'block'} : {display : 'none'}}>
+                        Title : {this.state.selectedBR.title}<br/>
+                        Date : {this.state.selectedBR.date.getDate()} {month[this.state.selectedBR.date.getMonth()]}<br/>
+                        Start Time : {this.state.selectedBR.startTime}<br/>
+                        End Time : {this.state.selectedBR.endTime}<br/>
+                        Organizer : {this.state.selectedBR.organizer}<br/>
+                        Group Members : {this.state.selectedBR.otherMembers.map(member => `${member},`)}<br/>
+                        <button onClick={()=>this.updateDetailedRequest('p')}>previous</button><button onClick={()=>this.updateDetailedRequest('n')}>next</button><br/>
+                        <button>Accept</button> <button>Reject</button>
+                    </div>    
                 </div>
             </div>
         )
