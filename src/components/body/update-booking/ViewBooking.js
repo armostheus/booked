@@ -93,11 +93,11 @@ class ViewBooking extends React.Component{
 
     updateDisplayDetails(p){
         let currentView = [this.state.selectedYB.id, this.state.yourBooking[0].id, this.state.yourBooking[this.state.yourBooking.length-1].id];
-            if(p==='p' && currentView[0] != currentView[1]){
+            if(p==='p' && currentView[0] !== currentView[1]){
                 let prevData = this.state.yourBooking.filter(data => data.id === (currentView[0]-1));
                 console.log(prevData[0]);
                 this.setState({selectedYB : prevData[0]});
-            } else if(p==='n'&&currentView[0] != currentView[2]){
+            } else if(p==='n'&&currentView[0] !== currentView[2]){
                 let prevData = this.state.yourBooking.filter(data => data.id === (currentView[0]+1));
                 console.log(prevData[0]);
                 this.setState({selectedYB : prevData[0]});
@@ -106,11 +106,11 @@ class ViewBooking extends React.Component{
 
     updateOthersDisplayDetails(p){
         let currentView = [this.state.selectedOB.id, this.state.othersBooking[0].id, this.state.othersBooking[this.state.othersBooking.length-1].id];
-            if(p==='p' && currentView[0] != currentView[1]){
+            if(p==='p' && currentView[0] !== currentView[1]){
                 let prevData = this.state.othersBooking.filter(data => data.id === (currentView[0]-1));
                 console.log(prevData[0]);
                 this.setState({selectedOB : prevData[0]});
-            } else if(p==='n'&&currentView[0] != currentView[2]){
+            } else if(p==='n'&&currentView[0] !== currentView[2]){
                 let prevData = this.state.othersBooking.filter(data => data.id === (currentView[0]+1));
                 console.log(prevData[0]);
                 this.setState({selectedOB : prevData[0]});
@@ -119,11 +119,11 @@ class ViewBooking extends React.Component{
 
     updateDetailedRequest(p){
         let currentView = [this.state.selectedBR.id, this.state.requests[0].id, this.state.requests[this.state.requests.length-1].id];
-            if(p==='p' && currentView[0] != currentView[1]){
+            if(p==='p' && currentView[0] !== currentView[1]){
                 let prevData = this.state.requests.filter(data => data.id === (currentView[0]-1));
                 console.log(prevData[0]);
                 this.setState({selectedBR : prevData[0]});
-            } else if(p==='n'&&currentView[0] != currentView[2]){
+            } else if(p==='n'&&currentView[0] !== currentView[2]){
                 let prevData = this.state.requests.filter(data => data.id === (currentView[0]+1));
                 console.log(prevData[0]);
                 this.setState({selectedBR : prevData[0]});
