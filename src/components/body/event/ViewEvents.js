@@ -3,7 +3,7 @@ import {Events} from '../../../mock-data/MockEvents';
 
 const EventsList = (props) => {
     return(
-        <div>
+        <div onClick={()=>props.displayEvent(props.data)}>
             <h4>{props.data.eventName}</h4>
             {props.data.title}<br/>
         </div>
@@ -16,6 +16,11 @@ class ViewEvents extends React.Component{
         this.state = {
             events : Events
         }
+        this.displayEvent = this.displayEvent.bind(this);
+    }
+
+    displayEvent(data){
+        console.log(data);
     }
 
     render(){
@@ -23,8 +28,11 @@ class ViewEvents extends React.Component{
             <div>
                 <h3>View Your Events</h3>
                 {
-                    this.state.events.map(data => <EventsList key={data.id} data={data}/>)
+                    this.state.events.map(data => <EventsList key={data.id} data={data} displayEvent={(data)=>this.displayEvent(data)}/>)
                 }
+                <div>
+                    {/* Implement display div here */}
+                </div>
             </div>
         )
     }
