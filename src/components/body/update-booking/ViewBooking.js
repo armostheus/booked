@@ -1,12 +1,21 @@
 import React from 'react'
 import { MyBookings, OthersBookings, BookingNotification } from '../../../mock-data/ViewBookingData'
 
+const month = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
+ 
 const ViewYourBookings = (props) => {
-    let month = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
-    return(
+       return(
         <div onClick={() => props.displayDetails(props.data)}>
             {props.data.date.getDate()} {month[props.data.date.getMonth()]}, {props.data.startTime} - {props.data.endTime} <br />
             <h4>{props.data.title}</h4>
+        </div>
+    )
+}
+
+const ViewOthersBookings = (props) => {
+    return(
+        <div onClick{() => props.displayOthersDetails(props.data)}>
+            sf
         </div>
     )
 }
@@ -57,7 +66,6 @@ class ViewBooking extends React.Component{
     }
 
     render(){
-        let month = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
         return(
             <div>
                 <div>
@@ -85,6 +93,10 @@ class ViewBooking extends React.Component{
                 </div>
                 <div style={this.state.selectedTab === "OB" ? {display : 'block'} : {display : 'none'}}>
                     Other's Bookings
+                    {
+                        this.state.othersBooking.map(data => <ViewOthersBookings key={data.id} data={data} displayOthersDetails={(data) => this.displayOthersDetails(data)}/>)
+                    }
+
                 </div>
                 <div style={this.state.selectedTab === "BR" ? {display : 'block'} : {display : 'none'}}>
                     Booking Request
