@@ -14,13 +14,19 @@ class ViewEvents extends React.Component{
     constructor(props){
         super(props);
         this.state = {
-            events : Events
+            events : Events,
+            selectedEvent : {
+                id : null,
+                eventName : null,
+                title : null,
+                description : null
+            }
         }
         this.displayEvent = this.displayEvent.bind(this);
     }
 
     displayEvent(data){
-        console.log(data);
+        this.setState({selectedEvent : data})
     }
 
     render(){
@@ -30,8 +36,12 @@ class ViewEvents extends React.Component{
                 {
                     this.state.events.map(data => <EventsList key={data.id} data={data} displayEvent={(data)=>this.displayEvent(data)}/>)
                 }
-                <div>
-                    {/* Implement display div here */}
+                <div style={this.state.selectedEvent.id ? {display : 'block'} : {display : 'none'}}>
+                    Event Name : {this.state.selectedEvent.eventName}<br/>
+                    Title : {this.state.selectedEvent.title}<br/>
+                    Description : {this.state.selectedEvent.description}<br/>
+                    <button>Previous</button> <button>Next</button><br/>
+                    <button>Edit</button> <button>Delete</button> <button>Close</button>
                 </div>
             </div>
         )
