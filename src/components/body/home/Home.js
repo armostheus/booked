@@ -1,7 +1,7 @@
 import React from 'react'
 import Calendar from 'react-calendar'
 import './Home.css'
-import {Redirect, Link} from 'react-router-dom'
+import {Link} from 'react-router-dom'
 
 import HomeBookingList from '../list/HomeBookingList'
 import { MonthData } from '../../../mock-data/MockHomeData'
