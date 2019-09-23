@@ -1,6 +1,7 @@
 import React from 'react'
 import Calendar from 'react-calendar'
 import './Home.css'
+import {Redirect, Link} from 'react-router-dom'
 
 import HomeBookingList from '../list/HomeBookingList'
 import { MonthData } from '../../../mock-data/MockHomeData'
@@ -52,28 +53,28 @@ class Home extends React.Component{
                     })
                 }
                 <div className="flex-container">
-                    <button className="flex-content">Create Personal Booking</button>
-                    <button className="flex-content">Create Group Booking</button>
+                    <button className="flex-content"><Link to="/PersonalBooking">Create Personal Booking</Link></button>
+                    <button className="flex-content"><Link to="/GroupBooking">Create Group Booking</Link></button>
                 </div>
                 <div className="flex-container">
-                    <button className="flex-content">Exit Booking</button>
-                    <button className="flex-content">View Your Booking</button>
+                    <button className="flex-content"><Link to="/ExitBooking">Exit Booking</Link></button>
+                    <button className="flex-content"><Link to="/ViewBooking">View Your Booking</Link></button>
                 </div>
                 <div className="flex-container">
-                    <button className="flex-content">Create Event</button>
-                    <button className="flex-content">View Your Events</button>
+                    <button className="flex-content"><Link to="/CreateEvent">Create Event</Link></button>
+                    <button className="flex-content"><Link to="/ViewEvents">View Your Events</Link></button>
                 </div>
                 <div className="flex-container">
-                    <button className="flex-content">Create Group</button>
-                    <button className="flex-content">View Group</button>
+                    <button className="flex-content"><Link to="/CreateGroup">Create Group</Link></button>
+                    <button className="flex-content"><Link to="/ViewGroup">View Group</Link></button>
                 </div>
                 <div className="flex-container">
-                    <button className="flex-content">Add Friend</button>
-                    <button className="flex-content">View Friend</button>
+                    <button className="flex-content"><Link to="/AddFriend">Add Friend</Link></button>
+                    <button className="flex-content"><Link to="/ViewFriend">View Friend</Link></button>
                 </div>
                 <div className="flex-container">
-                    <button className="flex-content">View Friend's Availability</button>
-                    <button className="flex-content">View Group's Availability</button>
+                    <button className="flex-content"><Link to="/FriendsAvailable">View Friend's Availability</Link></button>
+                    <button className="flex-content"><Link to="/GroupsAvailable">View Group's Availability</Link></button>
                 </div>
             </div>
         )

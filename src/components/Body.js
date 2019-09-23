@@ -1,4 +1,5 @@
 import React from 'react'
+import {Route, Link} from "react-router-dom"
 
 import Home from './body/home/Home'
 import CreatePersonalBooking from './body/create-booking/CreatePersonalBooking'
@@ -18,7 +19,20 @@ class Body extends React.Component{
     render(){
         return(
             <div>
-                <Home />
+                <Route exact path="/" component={Home} />
+                <Route exact path="/PersonalBooking" component={CreatePersonalBooking} />
+                <Route exact path="/GroupBooking" component={CreateGroupBooking} />
+                <Route exact path="/ExitBooking" component={ExitBooking} />
+                <Route exact path="/ViewBooking" component={ViewBooking} />
+                <Route exact path="/CreateEvent" component={CreateEvent} />
+                <Route exact path="/ViewEvents" component={ViewEvents} />
+                <Route exact path="/CreateGroup" component={CreateGroup} />
+                <Route exact path="/ViewGroup" component={ViewGroup} />
+                <Route exact path="/AddFriend" component={AddFriend} />
+                <Route exact path="/ViewFriend" component={ViewFriend} />
+                <Route exact path="/FriendsAvailable" component={ViewOthersAvailability} />
+                <Route exact path="/GroupsAvailable" component={ViewGroupsAvailability} />
+                {/* <Home />
                 <hr />
                 <CreatePersonalBooking />
                 <hr />
@@ -43,7 +57,7 @@ class Body extends React.Component{
                 <ViewOthersAvailability />
                 <hr />
                 <ViewGroupsAvailability />
-                <hr />
+                <hr /> */}
             </div>
         )
     }
