@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import { MyBookings } from '../mock-data/ViewBookingData'
+import { MonthData } from '../mock-data/MockHomeData'
 
 export const setDate = (date) => dispatch => {
     let month = {
@@ -18,11 +18,10 @@ export const fetchYearBookings = () => async (dispatch, getState) => {
 }
 
 export const fetchBookings = (year) => dispatch => {
-    const response =  MyBookings;
     dispatch({
         type: 'SET_BOOKING',
         payload: {
-            bookings : MyBookings
+            bookings : MonthData
         }
     })
 }

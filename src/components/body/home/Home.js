@@ -2,6 +2,8 @@ import React from 'react'
 import Calendar from 'react-calendar'
 import './Home.css'
 import {Link} from 'react-router-dom'
+import { connect } from 'react-redux';
+
 
 import HomeBookingList from '../list/HomeBookingList'
 import { MonthData } from '../../../mock-data/MockHomeData'
@@ -12,7 +14,6 @@ class Home extends React.Component{
     constructor(props){
         super(props);
         this.state = {
-            data : MonthData,
             dateSelelcted : new Date("1971-01-01")
         }
         this.changeDate = this.changeDate.bind(this);
@@ -31,26 +32,31 @@ class Home extends React.Component{
                 <Calendar 
                     tileClassName={
                         ({ date, view }) => {
-                            let dateArray = this.state.data.map(dat => dat.date.getDate());
+                            if(this.props.metadata.bookings){
+                                let dateArray = this.props.metadata.bookings.map(dat => dat.date.getDate());
                                 {/* if (view === 'month' && date.getDate() === 3 && date.getMonth() === 8){ */}
                                 if (view === 'month' && dateArray.includes(date.getDate()) && date.getMonth() === 8){
                                     return  'wednesday'
                                 } else {
                                     return null
                                 }
-                            }    
+                            } 
+                            return null
                         }
+                               
+                    }
                     onChange={this.changeDate}
                 />
                 <br/>
                 {
-                    this.state.data.map(dat => {
-                        if(dat.date.getDate() === this.state.dateSelelcted.getDate() && dat.date.getMonth() === this.state.dateSelelcted.getMonth()){
-                            return(
-                                <HomeBookingList key={dat.id} data={dat}/>
-                            )
-                        }
-                    })
+                    this.props.metadata.bookings ? 
+                        this.props.metadata.bookings.map(dat => {
+                            if(dat.date.getDate() === this.state.dateSelelcted.getDate() && dat.date.getMonth() === this.state.dateSelelcted.getMonth()){
+                                return(
+                                    <HomeBookingList key={dat.id} data={dat}/>
+                                )
+                            }
+                        }) : null
                 }
                 <div className="flex-container">
                     <button className="flex-content"><Link to="/PersonalBooking">Create Personal Booking</Link></button>
@@ -81,4 +87,10 @@ class Home extends React.Component{
     }
 }
 
-export default Home;
+const mapStateToProps = (state) => {
+    return {
+        metadata:state.metadata
+    }
+}
+
+export default connect(mapStateToProps)(Home);
