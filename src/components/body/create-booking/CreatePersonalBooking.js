@@ -4,6 +4,19 @@ import DatePicker from 'react-datepicker'
 import "react-datepicker/dist/react-datepicker.css";
 
 class CreatePersonalBooking extends React.Component{
+    constructor(props){
+        super(props);
+        this.state = {
+            data : {
+                date : null,
+                startTime : null,
+                endTime : null,
+                title : null,
+                description : null,
+                reminder : null,
+            }
+        }
+    }
 
     render(){
         return(
