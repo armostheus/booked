@@ -4,6 +4,13 @@ import DatePicker from 'react-datepicker'
 import "react-datepicker/dist/react-datepicker.css";
 import { setDate } from 'date-fns';
 
+/* 
+Pending Implementation
+1. displaying a list of events when clicked on event button
+2. Selecting an event from that list
+3. Auto populating event details in the component
+*/
+
 class CreatePersonalBooking extends React.Component{
     constructor(props){
         super(props);
