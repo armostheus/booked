@@ -1,4 +1,5 @@
 import { combineReducers } from 'redux';
+import metadataReducer from './metadataReducer'
 import addFriendReducer from './addFriendReducer'
 import createEventReducer from './createEventReducer'
 import createGroupBookingReducer from './createGroupBookingReducer'
@@ -13,6 +14,7 @@ import viewYourBookingReducer from './viewYourBookingReducer'
 import viewYourEventsReducer from './viewYourEventsReducer'
 
 export default combineReducers({
+    metadata : metadataReducer,
     addFriend : addFriendReducer,
     createEvent : createEventReducer,
     createGroupBooking : createGroupBookingReducer,
