@@ -14,14 +14,33 @@ class Home extends React.Component{
     constructor(props){
         super(props);
         this.state = {
-            dateSelelcted : new Date("1971-01-01")
+            dateSelelcted : new Date(Date.now()),
+            dateArray : []
         }
         this.changeDate = this.changeDate.bind(this);
     }
 
+    componentDidMount(){
+        let dateArray = this.props.metadata.bookings.map(dat => {
+            let dt = new Date(dat.date);
+            if(dt.getMonth() === this.props.metadata.currentMonth)
+                return dt.getDate()
+        });
+        this.setState({dateArray:dateArray})
+    }
+
     changeDate(date){
+        if(date.getMonth !== this.state.dateSelelcted.getMonth()){
+            let dateArray = this.props.metadata.bookings.map(dat => {
+                let dt = new Date(dat.date);
+                if(dt.getMonth() === date.getMonth())
+                    return dt.getDate()
+            });
+            this.setState({dateArray:dateArray});
+        }
         this.setState({dateSelelcted:date});
     }
+
 
     render(){
         return(
@@ -33,9 +52,13 @@ class Home extends React.Component{
                     tileClassName={
                         ({ date, view }) => {
                             if(this.props.metadata.bookings){
-                                let dateArray = this.props.metadata.bookings.map(dat => dat.date.getDate());
+                                let dateArray = this.props.metadata.bookings.map(dat => {
+                                    let dt = new Date(dat.date);
+                                    if(dt.getMonth() === date.getMonth())
+                                        return dt.getDate()
+                                });
                                 {/* if (view === 'month' && date.getDate() === 3 && date.getMonth() === 8){ */}
-                                if (view === 'month' && dateArray.includes(date.getDate()) && date.getMonth() === 8){
+                                if (view === 'month' && this.state.dateArray.includes(date.getDate()) && date.getMonth() === this.state.dateSelelcted.getMonth()){
                                     return  'wednesday'
                                 } else {
                                     return null
@@ -45,15 +68,18 @@ class Home extends React.Component{
                         }
                                
                     }
+                    activeStartDate={this.state.dateSelelcted}
                     onChange={this.changeDate}
+                    nextLabel={console.log('view Changed')}
                 />
                 <br/>
                 {
                     this.props.metadata.bookings ? 
                         this.props.metadata.bookings.map(dat => {
-                            if(dat.date.getDate() === this.state.dateSelelcted.getDate() && dat.date.getMonth() === this.state.dateSelelcted.getMonth()){
+                            let dt = new Date(dat.date)
+                            if(dt.getDate() === this.state.dateSelelcted.getDate() && dt.getMonth() === this.state.dateSelelcted.getMonth()){
                                 return(
-                                    <HomeBookingList key={dat.id} data={dat}/>
+                                    <HomeBookingList key={dat._id} data={dat}/>
                                 )
                             }
                         }) : null
