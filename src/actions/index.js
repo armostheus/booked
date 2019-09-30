@@ -6,7 +6,7 @@ export const setDate = (date) => dispatch => {
         type : 'SET_DATE',
         payload : {
             currentMonth : date.getMonth(),
-            currentYear : date.getYear(),
+            currentYear : date.getFullYear(),
             bookings : []
         }
     }
@@ -18,10 +18,19 @@ export const fetchYearBookings = () => async (dispatch, getState) => {
 }
 
 export const fetchBookings = (year) => dispatch => {
-    dispatch({
-        type: 'SET_BOOKING',
-        payload: {
-            bookings : MonthData
-        }
-    })
+    fetch("http://localhost:3100/fetch/yearBooking",{
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json;charset=utf-8'
+        }, 
+        body: JSON.stringify({year : year})
+    }).then(res => res.json())
+    .then(bookings => 
+        dispatch({
+            type: 'SET_BOOKING',
+            payload: {
+                bookings : bookings
+            }
+        }) 
+    )
 }

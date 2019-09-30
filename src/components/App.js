@@ -7,7 +7,7 @@ import {setDate, fetchYearBookings } from '../actions';
 
 class App extends React.Component{
 
-    componentDidMount(){
+    componentWillMount(){
         this.props.setDate(new Date);
         this.props.fetchYearBookings();
     }
