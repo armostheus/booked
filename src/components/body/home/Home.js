@@ -61,6 +61,21 @@ class Home extends React.Component{
         this.setState({dateSelelcted:date});
     }
 
+    componentWillMount(){
+        if(this.props.metadata.bookings.length>0){
+            let current = new Date(Date.now());
+            if(current.getMonth !== this.state.dateSelelcted.getMonth()){
+                let dateArray = this.props.metadata.bookings.map(dat => {
+                    let dt = new Date(dat.date);
+                    if(dt.getMonth() === current.getMonth())
+                        return dt.getDate()
+                });
+                this.setState({dateArray:dateArray});
+            }
+            this.setState({dateSelelcted : current});
+        }
+    }
+
     setNextMonthActive(){
         let date = this.state.dateSelelcted;
         let current = null;
@@ -106,13 +121,13 @@ class Home extends React.Component{
         return(
             <div>
                 <h3>
-                    Hi {'{username}'}! here's your calendar.
+                    Hi {this.props.user[0].firstName}! here's your calendar.
                 </h3>
                 <Calendar 
                     tileClassName={
                         ({ date, view }) => {
                                 if (view === 'month' && this.state.dateArray.includes(date.getDate()) && date.getMonth() === this.state.dateSelelcted.getMonth()){
-                                    return  'other'
+                                    return  'booking'
                                 } else {
                                     return null
                                 }
@@ -168,7 +183,8 @@ class Home extends React.Component{
 
 const mapStateToProps = (state) => {
     return {
-        metadata:state.metadata
+        metadata:state.metadata,
+        user:state.user
     }
 }
 
