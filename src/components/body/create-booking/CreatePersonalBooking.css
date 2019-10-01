@@ -1,0 +1,16 @@
+.freeze{
+    opacity: 0.2;
+    pointer-events: none;
+}
+.show-loading{
+    display : block;
+}
+.no-loading{
+    display : none;
+}
+.show-modal{
+    display : block
+}
+.no-modal{
+    display : none
+}

@@ -6,27 +6,46 @@ import { connect } from 'react-redux';
 
 
 import HomeBookingList from '../list/HomeBookingList'
-import { MonthData } from '../../../mock-data/MockHomeData'
-/* import Calendar from 'react-calendar/dist/entry.nostyle'
+/*import { MonthData } from '../../../mock-data/MockHomeData'
+ import Calendar from 'react-calendar/dist/entry.nostyle'
  */
+
+const NextIcon = (props) =>{
+        return(
+            <div onClick={props.setNextMonthActive}>›</div>    
+        )
+}
+
+const PrevIcon = (props) => {
+    return(
+        <div onClick={props.setPrevMonthActive}>‹</div>    
+    )
+}
 
 class Home extends React.Component{
     constructor(props){
         super(props);
+        
         this.state = {
             dateSelelcted : new Date(Date.now()),
             dateArray : []
         }
         this.changeDate = this.changeDate.bind(this);
+        this.setNextMonthActive = this.setNextMonthActive.bind(this);
+        this.setPrevMonthActive = this.setPrevMonthActive.bind(this);
     }
 
-    componentDidMount(){
-        let dateArray = this.props.metadata.bookings.map(dat => {
-            let dt = new Date(dat.date);
-            if(dt.getMonth() === this.props.metadata.currentMonth)
-                return dt.getDate()
-        });
-        this.setState({dateArray:dateArray})
+    componentDidUpdate(prevProps){
+        if(prevProps.metadata.bookings.length===0 && this.state.dateArray.length ===0){
+            let dateArray = this.props.metadata.bookings.map(dat => {
+                let dt = new Date(dat.date);
+                if(dt.getMonth() === this.props.metadata.currentMonth)
+                    return dt.getDate()
+            });
+            if(JSON.stringify(this.state.dateArray) !== JSON.stringify(dateArray)){
+                this.setState({dateArray:dateArray})
+            }
+        }
     }
 
     changeDate(date){
@@ -37,8 +56,64 @@ class Home extends React.Component{
                     return dt.getDate()
             });
             this.setState({dateArray:dateArray});
+            this.setState({dateSelelcted:date});
         }
         this.setState({dateSelelcted:date});
+    }
+
+    componentWillMount(){
+        if(this.props.metadata.bookings.length>0){
+            let current = new Date(Date.now());
+            if(current.getMonth !== this.state.dateSelelcted.getMonth()){
+                let dateArray = this.props.metadata.bookings.map(dat => {
+                    let dt = new Date(dat.date);
+                    if(dt.getMonth() === current.getMonth())
+                        return dt.getDate()
+                });
+                this.setState({dateArray:dateArray});
+            }
+            this.setState({dateSelelcted : current});
+        }
+    }
+
+    setNextMonthActive(){
+        let date = this.state.dateSelelcted;
+        let current = null;
+        if(date.getMonth()===11){
+            current = new Date(date.getFullYear() + 1, 0, 1);
+            //fetchDataFor next year
+        } else {
+            current = new Date(date.getFullYear(), date.getMonth() + 1, 1);
+        }
+        if(current.getMonth !== this.state.dateSelelcted.getMonth()){
+            let dateArray = this.props.metadata.bookings.map(dat => {
+                let dt = new Date(dat.date);
+                if(dt.getMonth() === current.getMonth())
+                    return dt.getDate()
+            });
+            this.setState({dateArray:dateArray});
+        }
+        this.setState({dateSelelcted : current});
+    }
+
+    setPrevMonthActive(){
+        let date = this.state.dateSelelcted;
+        let current = null;
+        if(date.getMonth()===0){
+            current = new Date(date.getFullYear() - 1, 11, 1);
+            //fetchDataFor next year
+        } else {
+            current = new Date(date.getFullYear(), date.getMonth() - 1, 1);
+        }
+        if(current.getMonth !== this.state.dateSelelcted.getMonth()){
+            let dateArray = this.props.metadata.bookings.map(dat => {
+                let dt = new Date(dat.date);
+                if(dt.getMonth() === current.getMonth())
+                    return dt.getDate()
+            });
+            this.setState({dateArray:dateArray});
+        }
+        this.setState({dateSelelcted : current});
     }
 
 
@@ -46,31 +121,24 @@ class Home extends React.Component{
         return(
             <div>
                 <h3>
-                    Hi {'{username}'}! here's your calendar.
+                    Hi {this.props.user[0].firstName}! here's your calendar.
                 </h3>
                 <Calendar 
                     tileClassName={
                         ({ date, view }) => {
-                            if(this.props.metadata.bookings){
-                                let dateArray = this.props.metadata.bookings.map(dat => {
-                                    let dt = new Date(dat.date);
-                                    if(dt.getMonth() === date.getMonth())
-                                        return dt.getDate()
-                                });
-                                {/* if (view === 'month' && date.getDate() === 3 && date.getMonth() === 8){ */}
                                 if (view === 'month' && this.state.dateArray.includes(date.getDate()) && date.getMonth() === this.state.dateSelelcted.getMonth()){
-                                    return  'wednesday'
+                                    return  'booking'
                                 } else {
                                     return null
                                 }
-                            } 
-                            return null
                         }
                                
                     }
-                    activeStartDate={this.state.dateSelelcted}
                     onChange={this.changeDate}
-                    nextLabel={console.log('view Changed')}
+                    onClickMonth={(value)=> this.changeDate(value)}
+                    value={this.state.dateSelelcted}
+                    nextLabel={<NextIcon setNextMonthActive={this.setNextMonthActive}/>}
+                    prevLabel={<PrevIcon setPrevMonthActive={this.setPrevMonthActive}/>}
                 />
                 <br/>
                 {
@@ -115,7 +183,8 @@ class Home extends React.Component{
 
 const mapStateToProps = (state) => {
     return {
-        metadata:state.metadata
+        metadata:state.metadata,
+        user:state.user
     }
 }
 

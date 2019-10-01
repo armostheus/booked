@@ -1,8 +1,10 @@
 import React from 'react'
 import DatePicker from 'react-datepicker'
+import { connect } from 'react-redux';
+import './CreatePersonalBooking.css'
+import { fetchYearBookings } from '../../../actions/index'
 
 import "react-datepicker/dist/react-datepicker.css";
-import { setDate } from 'date-fns';
 
 /* 
 Pending Implementation
@@ -15,15 +17,29 @@ class CreatePersonalBooking extends React.Component{
     constructor(props){
         super(props);
         this.state = {
-                date : null,
-                startTime : null,
-                endTime : null,
-                title : null,
+                user: this.props.user[0].user,
+                date : undefined,
+                startTime : undefined,
+                endTime : undefined,
+                title : undefined,
                 private : false,
-                description : null,
+                description : undefined,
                 reminder : false,
-                reminderTime : null
+                reminderTime : new Date(Date.now()),
+                freeze : false,
+                booked : false
             }
+        this.nullState = {
+            user: this.props.user[0].user,
+            date : undefined,
+            startTime : undefined,
+            endTime : undefined,
+            title : undefined,
+            private : false,
+            description : undefined,
+            reminder : false,
+            reminderTime : undefined,
+        }
         this.setData = this.setData.bind(this);
         this.bookItBabe = this.bookItBabe.bind(this);
     }
@@ -32,14 +48,48 @@ class CreatePersonalBooking extends React.Component{
         this.setState(prp);
     }
 
+
     bookItBabe(){
-        console.log(this.state);
+        //Freeze the UI here
+            this.setState({freeze : true})
+        ////////////
         //Implement axios call to backend here
+        let time = [this.state.startTime, this.state.endTime, this.state.reminderTime]
+        time[0].setFullYear(this.state.date.getFullYear(), this.state.date.getMonth(), this.state.date.getDate())
+        time[1].setFullYear(this.state.date.getFullYear(), this.state.date.getMonth(), this.state.date.getDate())
+        time[2].setFullYear(this.state.date.getFullYear(), this.state.date.getMonth(), this.state.date.getDate())
+        let data = {
+            private:this.state.private,
+            user:this.props.user[0].user,
+            date:this.state.date,
+            startTime:time[0],
+            endTime:time[0],
+            title:this.state.title,
+            description:this.state.description,
+            reminder:this.state.reminder,
+            reminderTime:time[0]
+        }
+        fetch("http://localhost:3100/create/personalBooking",{
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json;charset=utf-8'
+            }, 
+            body: JSON.stringify(data)
+        }).then(res => res.json())
+        .then(data => {
+            this.props.fetchYearBookings();
+            //Reset the state.
+            this.setState({...this.nullState})
+            //Show the modal for 10 seconds.
+            this.setState({freeze : false, booked : true})
+            setTimeout(() => { this.setState({booked : false}) }, 10000);
+        })
     }
 
     render(){
         return(
-            <div>
+            <React.Fragment>
+            <div className={`${this.state.freeze ? 'freeze' : ''}`}>
                 <h3>CreatePersonalBooking</h3>
                 Date : <DatePicker 
                         selected={this.state.date}
@@ -98,8 +148,21 @@ class CreatePersonalBooking extends React.Component{
                 <br/>
                 <button onClick={this.bookItBabe}>Book!</button>         
             </div>
+            <div className={`${this.state.freeze ? 'show-loading' : 'no-loading'}`}>
+                Loading
+            </div>
+            <div className={`${this.state.booked ? 'show-modal' : 'no-modal'}`}>
+                Booking has been added!
+            </div>
+            </React.Fragment>
         )
     }
 }
 
-export default CreatePersonalBooking;
+const mapStateToProps=(state)=>{
+    return {
+        user: state.user
+    }
+}
+
+export default connect(mapStateToProps, {fetchYearBookings})(CreatePersonalBooking);
