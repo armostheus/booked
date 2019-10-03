@@ -55,3 +55,7 @@ export const getFriendList = (user) => dispatch => {
         })
     })
 }
+
+export const getGroups = () => async (dispatch, getState) => {
+    console.log("fetch group details and save it to view Group state value")
+}
