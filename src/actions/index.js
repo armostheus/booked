@@ -36,20 +36,22 @@ export const fetchBookings = (year) => dispatch => {
 }
 
 export const updateFriendlist = () => async (dispatch, getState) => {
-    await dispatch(()=> dispatch =>{
-                        fetch("http://localhost:3100/fetch/friendList",{
-                        method: 'POST',
-                        headers: {
-                        'Content-Type': 'application/json;charset=utf-8'
-                        }, 
-                        body: JSON.stringify({user : getState().user[0].user})
-                    }).then(res => res.json())
-                    .then(friendList => {
-                        dispatch({
-                            type : 'UPDATE_FRIENDLIST',
-                            payload: friendList
-                        })
-                    })
-                    //implement fetch/friendList in backend
-    });
+    console.log("Action updateFriendlist")
+    await dispatch(getFriendList(getState().user[0].user));
+}
+
+export const getFriendList = (user) => dispatch => {
+        fetch("http://localhost:3100/fetch/friendList",{
+        method: 'POST',
+        headers: {
+        'Content-Type': 'application/json;charset=utf-8'
+        }, 
+        body: JSON.stringify({user : user})
+    }).then(res => res.json())
+    .then(friendList => {
+        dispatch({
+            type : 'UPDATE_FRIENDLIST',
+            payload: friendList
+        })
+    })
 }

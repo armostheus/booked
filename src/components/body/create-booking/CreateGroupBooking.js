@@ -97,7 +97,7 @@ class CreateGroupBooking extends React.Component{
                                     dateFormat="MMMM d, yyyy h:mm aa"
                                     />
                 <br/>
-                Group Members :  <input type="text" name="title" /> <button>Group</button>
+                Group Members :  <input type="text" name="title" /> <button>Group</button><button>Friends</button>
                 <br/>
                 <button onClick={this.bookItBabe}>Book!</button>  
 

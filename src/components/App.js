@@ -3,13 +3,14 @@ import {connect} from 'react-redux'
 
 import Header from './Header'
 import Body from './Body'
-import {setDate, fetchYearBookings } from '../actions';
+import {setDate, fetchYearBookings, updateFriendlist } from '../actions';
 
 class App extends React.Component{
 
     componentWillMount(){
         this.props.setDate(new Date);
         this.props.fetchYearBookings();
+        this.props.updateFriendlist();
     }
 
     render(){
@@ -30,4 +31,4 @@ const mapStateToProps = (state) => {
 
 
 
-export default connect(mapStateToProps, {setDate, fetchYearBookings})(App);
+export default connect(mapStateToProps, {setDate, fetchYearBookings, updateFriendlist})(App);
