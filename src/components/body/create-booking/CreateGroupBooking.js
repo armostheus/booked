@@ -10,6 +10,22 @@ Pending Implementation:
 3. Removing a group member mistakenly added
 */
 
+const GroupList = (props) => {
+    return(
+        <div>
+            Pre-Created Group list will be rendered here
+        </div>
+    )
+}
+
+const FriendList = (props) => {
+    return(
+        <div>
+        Your Friend list will be rendered here
+        </div>
+    )
+}
+
 class CreateGroupBooking extends React.Component{
     constructor(props){
         super(props);
@@ -22,10 +38,14 @@ class CreateGroupBooking extends React.Component{
             description:null,
             reminder:false,
             reminderTime:null,
-            groupMembers:[]
+            groupMembers:[],
+            activeModal:null
         }
         this.setData = this.setData.bind(this);
         this.bookItBabe = this.bookItBabe.bind(this);
+        this.showGroups = this.showGroups.bind(this);
+        this.showFriendList = this.showFriendList.bind(this);
+        this.closePopup = this.closePopup.bind(this);
     }
 
     setData(prp){
@@ -37,8 +57,23 @@ class CreateGroupBooking extends React.Component{
         //Implement axios call to backend here
     }
 
+    showGroups(){
+        console.log("This function will open a popup and show a list of groups of user")
+        this.setState({activeModal:'group'});
+    }
+
+    showFriendList(){
+        console.log("This function will open a popup and show a list of friends of user")
+        this.setState({activeModal:'friends'})
+    }
+
+    closePopup(){
+        this.setState({activeModal:null})
+    }
+
     render(){
         return(
+            <React.Fragment>
             <div>
                 <h3>CreateGroupBooking</h3>
                 <br/>
@@ -97,12 +132,22 @@ class CreateGroupBooking extends React.Component{
                                     dateFormat="MMMM d, yyyy h:mm aa"
                                     />
                 <br/>
-                Group Members :  <input type="text" name="title" /> <button>Group</button><button>Friends</button>
+                Group Members :  <input type="text" name="title" /> <button onClick={this.showGroups}>Group</button><button onClick={this.showFriendList}>Friends</button>
                 <br/>
                 <button onClick={this.bookItBabe}>Book!</button>  
 
 
             </div>
+            <div style={this.state.activeModal === 'group' ? {display:"block"} : {display:"none"}}>
+                <GroupList />
+                <button onClick={this.closePopup}>X</button>
+            </div>
+            <div style={this.state.activeModal === 'friends' ? {display:"block"} : {display:"none"}}>
+                <FriendList />
+                <button onClick={this.closePopup}>X</button>
+            </div>
+
+            </React.Fragment>
         )
     }
 }
