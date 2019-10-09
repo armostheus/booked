@@ -1,4 +1,5 @@
 import React from 'react'
+import DatePicker from 'react-datepicker'
 import { MyBookings, OthersBookings, BookingNotification } from '../../../mock-data/ViewBookingData'
 
 const month = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
@@ -36,6 +37,7 @@ class ViewBooking extends React.Component{
         super(props);
         this.state = {
             yourBooking : MyBookings,
+            startDate : new Date(Date.now()),
             othersBooking : OthersBookings,
             requests : BookingNotification,
             selectedTab : 'YB',
@@ -73,6 +75,7 @@ class ViewBooking extends React.Component{
         this.changeTab = this.changeTab.bind(this);
         this.displayDetails = this.displayDetails.bind(this);
         this.updateDisplayDetails = this.updateDisplayDetails.bind(this);
+        this.setStartDate = this.setStartDate.bind(this);
     }
 
     changeTab(view){
@@ -130,11 +133,21 @@ class ViewBooking extends React.Component{
             }       
     }
 
+    setStartDate(date){
+        this.setState({startDate : date})
+    }
+
     render(){
         return(
             <div>
                 <div>
                     <h3>ViewBooking</h3>
+                    Select Year : <DatePicker
+                                    selected={this.state.startDate}
+                                    onChange={date => this.setStartDate(date)}
+                                    dateFormat="MM/yyyy"
+                                    showMonthYearPicker
+                                    />
                     <button onClick={() => this.changeTab('YB')}>Your Bookings</button>
                     <button onClick={() => this.changeTab('OB')}>Others' Bookings</button>
                     <button onClick={() => this.changeTab('BR')}>Booking Request</button>
